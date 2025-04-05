@@ -1,0 +1,16 @@
+---
+- name: Echo something on server over ssh
+  hosts: server
+  become: true
+  tasks:
+    - name: Echo
+      ansible.builtin.debug:
+        msg: Echo something on server
+
+- name: Echo something on agent over ssh
+  hosts: agent
+  become: true
+  tasks:
+    - name: Echo
+      ansible.builtin.debug:
+        msg: Echo something on agent
