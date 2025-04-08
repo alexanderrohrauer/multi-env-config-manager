@@ -3,16 +3,28 @@ k3s_cluster:
   children:
     server:
       hosts:
-        192.16.35.11:
+        xxx.xxx.xxx.xx1:
+          ansible_port: xxx
+          private_ip: xxx
+          public_ip: xxx
+          private_ip_iface: eno1
     agent:
       hosts:
-        192.16.35.12:
-        192.16.35.13:
+        xxx.xxx.xxx.xx2:
+          ansible_port: xxx
+          private_ip: xxx
+          public_ip: xxx
+          private_ip_iface: eno1
+        xxx.xxx.xxx.xx3:
+          ansible_port: xxx
+          private_ip: xxx
+          public_ip: xxx
+          private_ip_iface: eno1
 
   # Required Vars
   vars:
-    ansible_port: 22
-    ansible_user: debian
+    ansible_port: "{{ hostvars[inventory_hostname].ansible_port }}"
+    ansible_user: xxx
     k3s_version: v1.30.2+k3s1
     # The token should be a random string of reasonable length. You can generate
     # one with the following commands:
@@ -20,12 +32,12 @@ k3s_cluster:
     # - pwgen -s 64 1
     # You can use ansible-vault to encrypt this value / keep it secret.
     # Or you can omit it if not using Vagrant and let the first server automatically generate one.
-    token: "changeme!"
-    api_endpoint: "{{ hostvars[groups['server'][0]]['ansible_host'] | default(groups['server'][0]) }}"
+    token: "xxx"
+    api_endpoint: "xxx"
 
     # Optional vars
-    # extra_server_args: ""
-    # extra_agent_args: ""
+    extra_server_args: " --tls-san=xxx"
+    extra_agent_args: "--node-ip={{hostvars[inventory_hostname].private_ip}} --node-external-ip={{hostvars[inventory_hostname].public_ip}} --flannel-iface={{hostvars[inventory_hostname].private_ip_iface}}"
     # cluster_context: k3s-ansible
     # api_port: 6443
     # k3s_server_location: /var/lib/rancher/k3s
