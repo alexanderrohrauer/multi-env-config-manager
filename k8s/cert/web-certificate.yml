@@ -1,0 +1,22 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: web-cert
+  namespace: web
+spec:
+  commonName: pr-busem-web
+  secretName: web-cert-secret
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  dnsNames:
+    - lab04.ce.uni-linz.ac.at
+    - lab05.ce.uni-linz.ac.at
+    - lab06.ce.uni-linz.ac.at
+    - 140.78.73.104
+    - 140.78.73.105
+    - 140.78.73.106
+  issuerRef:
+    name: ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
