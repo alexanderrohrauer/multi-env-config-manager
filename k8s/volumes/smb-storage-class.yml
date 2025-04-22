@@ -9,6 +9,7 @@ parameters:
   source: "//140.78.73.104/SAMBASHARE"
 volumeBindingMode: WaitForFirstConsumer
 reclaimPolicy: Delete
+allowVolumeExpansion: true
 mountOptions:
   - guest
   - dir_mode=0777
