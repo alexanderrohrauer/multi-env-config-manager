@@ -1,0 +1,21 @@
+---
+
+- name: Merge default variable
+  ansible.builtin.import_tasks: merge-defaults.yml
+  tags:
+    - default
+    - config-only
+
+
+- name: Install and configure Samba
+  # logic restricts Samba to desktops inside my LAN (only applies if host_restrictions=TRUE)
+  when: >
+    not (host_restrictions | bool) or
+    (ansible_dns.search is search("fs1", ignorecase=true) and ansible_form_factor is search("desktop", ignorecase=true))
+  block:
+
+    - ansible.builtin.import_tasks: install.yml
+
+    - ansible.builtin.import_tasks: config.yml
+      tags: config-only
+  # END OF BLOCK

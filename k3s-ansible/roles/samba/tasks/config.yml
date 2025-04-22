@@ -1,0 +1,90 @@
+---
+
+- name: Make sure pexpect is installed
+  ansible.builtin.apt:
+    name: python3-pexpect
+    state: present
+
+- name: Create Samba configuration
+  ansible.builtin.template:
+    src: samba.conf.j2
+    dest: "{{ samba.config }}"
+    owner: root
+    group: root
+    mode: u=rw,go=r
+  notify:
+    - testparm
+    - restart samba
+
+- name: Configure Samba share
+  ansible.builtin.blockinfile:
+    path: "{{ samba.config }}"
+    insertafter: "#===== Share Definitions ====="
+    # I surround most keys with Jinja if statements to avoid messing with their default values
+    block: |
+      [{{ share.label }}]
+      path = "{{ share.path }}"
+      available = {{ share.available }}
+      {# always set "valid users" parameter, unless share is public #}
+      {% if not ((share.public is defined and (share.public | bool)) or (share.guestok is defined and (share.guestok | bool))) %}
+      valid users = {{ samba.users | map(attribute="user") | join(" ") }}
+      {% endif %}
+      {% if share.browseable is defined and share.browseable != "" %}
+      browseable = {{ share.browseable }}
+      {% endif %}
+      {% if share.readonly is defined and share.readonly != "" %}
+      read only = {{ share.readonly }}
+      {% endif %}
+      {% if share.writeable is defined and share.writeable != "" %}
+      writeable = {{ share.writeable }}
+      {% endif %}
+      {% if share.public is defined and share.public != "" %}
+      public = {{ share.public }}
+      {% endif %}
+      {% if share.guestaccount is defined and share.guestaccount != "" %}
+      guest account = {{ share.guestaccount }}
+      {% endif %}
+      {% if share.guestok is defined and share.guestok != "" %}
+      guest ok = {{ share.guestok }}
+      {% endif %}
+      {% if share.guestonly is defined and share.guestonly != "" %}
+      guest only = {{ share.guestonly }}
+      {% endif %}
+      {% if share.createmask is defined %}
+      create mask = {{ share.createmask }}
+      {% endif %}
+      {% if share.directorymask is defined %}
+      directory mask = {{ share.directorymask }}
+      {% endif %}
+      {% if share.forceuser is defined and share.forceuser != "" %}
+      force user = {{ share.forceuser }}
+      {% endif %}
+      {% if share.forcegroup is defined and share.forcegroup != "" %}
+      force group = {{ share.forcegroup }}
+      {% endif %}
+      {% if share.comment is defined and share.comment != "" %}
+      comment = {{ share.comment }}
+      {% endif %}
+
+  loop: "{{ samba.shares }}"
+  loop_control:
+    loop_var: share
+
+- name: Create share folders
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: "{{ item.mode }}"
+  loop: "{{ samba.shares }}"
+  become: true
+
+- name: Configure Samba users
+  ansible.builtin.expect:
+    command: smbpasswd -a {{ item.user }}
+    timeout: 3
+    responses:
+      'New SMB password': "{{ item.pass }}"
+      'Retype new SMB password': "{{ item.pass }}"
+  loop: "{{ samba.users }}"
+  no_log: true
+  notify: restart samba

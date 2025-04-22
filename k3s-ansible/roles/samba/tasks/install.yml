@@ -1,0 +1,15 @@
+---
+
+- name: Install samba and dependencies
+  ansible.builtin.apt:
+    name:
+      - samba
+      - samba-common
+      - cifs-utils
+    state: present
+
+- name: Ensure Samba is running and set to start on boot
+  ansible.builtin.service:
+    name: "{{ samba.daemon }}"
+    state: started
+    enabled: yes

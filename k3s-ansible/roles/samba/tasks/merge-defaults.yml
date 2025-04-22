@@ -1,0 +1,34 @@
+---
+
+# "samba" variable should be defined somehwere with higher priority, such
+# as in group_vars or play vars
+
+# if role variable is defined, merge it with "samba_default"
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/combine_filter.html
+- name: Merge default variable
+  run_once: true
+  when: samba is defined
+  tags: default
+  ansible.builtin.set_fact:
+    samba: "{{ samba_default | combine(samba, recursive=True) }}"
+  no_log: true
+
+# if "samba" is not defined, simply assign "samba_default" -> "samba"
+- name: Use samba default variable
+  run_once: true
+  when: samba is not defined
+  tags: default
+  ansible.builtin.set_fact:
+    samba: "{{ samba_default }}"
+  no_log: true
+
+# WARNING, this task displays passwords on stdout and prints them to log!
+- name: Inspect "samba" variable
+  debug:
+    var: samba
+  when: samba_testing | bool
+
+- name: Pausing to highlight merge result above
+  ansible.builtin.wait_for:
+    timeout: 5
+  when: samba_testing | bool

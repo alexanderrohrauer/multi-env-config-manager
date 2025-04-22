@@ -1,0 +1,78 @@
+---
+
+samba_default:
+  daemon: smbd.service
+  config: /etc/samba/smb.conf
+  # restrict samba to bind only to specified interfaces?
+  bind_if_only: "no"
+  # list of interfaces (only applies if "yes" above)
+  # https://wiki.samba.org/index.php/Configure_Samba_to_Bind_to_Specific_Interfaces
+  interfaces: []
+    # # wiki says you should always enable Samba to listen on loopback devices
+    # - lo
+    # - eth0
+  workgroup: "WORKGROUP"
+  # list of Samba "valid users" # username must belong to a an existing OS account
+  # note that we are not specifying Samba users per share at present
+  users: []
+    # - user: "{{ ansible_env.USER }}"
+    #   pass: "password"
+    # - user: "soliman"
+    #   pass: "agratefulsubject"
+  shares: # []
+    - label: "SAMBASHARE"
+      path: "/media/samba"
+      # If available = no, then ALL attempts to connect to the service will fail
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#AVAILABLE
+      available: "yes"
+      # whether this share is seen in the list of available shares in a net view and in the browse list
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#BROWSEABLE
+      browseable: "yes"
+      # if "yes", then users of a service may not create or modify files in the service's directory
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#READONLY
+      readonly: "no"
+      # inverted synonym for readonly
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#WRITEABLE
+      writeable: "yes"
+      # Whatever privileges this user has will be available to any client connecting to the guest service.
+      # This user must exist in the password file, but does not require a valid login.
+      guestaccount: ""
+      # public - This parameter is a synonym for guest ok.
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#PUBLIC
+      public: "yes"
+      # If this parameter is yes, then no password is required to connect to the service.
+      # Privileges will be those of the guest account.
+      guestok: "yes"
+      # If this parameter is yes, then only guest connections to the service are permitted.
+      # This parameter will have no effect if guestok or public is not set for the service.
+      guestonly: ""
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#CREATEMASK
+      # default 0744
+      createmask: "0666"
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#DIRECTORYMASK
+      # default 0755
+      directorymask: "0777"
+      # A UNIX user name that will be assigned as the default user for all users connecting to this service.
+      # Clients still need to connect as a valid user and supply a valid password (unless share is public).
+      # Once connected, all file operations will be performed as "force user".
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#FORCEUSER
+      forceuser: ""
+      # If the force user parameter is also set the group specified in force group will override
+      # the primary group set in force user.
+      # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html#FORCEGROUP
+      forcegroup: ""
+      # comment = What a nice share
+      comment: ""
+      # Mode for the directory
+      mode: "0777"
+
+
+# set samba_testing to true to enable debug messages
+# easiest via --extra-vars "{samba_testing: true}"
+# CAREFUL, when "true" will expose Samba passwords in output/log
+samba_testing: false
+
+# Keep this default value as-is if you are running this role in your own environment
+# This var is overriden in group_vars/playbook to restrict some tasks to certain hosts
+# in solarchemist's environment
+host_restrictions: false

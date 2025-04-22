@@ -6,6 +6,6 @@
 3. Now you can access kubernetes cluster with the `kubectl` command
 4. Alternatively you can use a GUI: the Kubernetes plugin for Intellij or the IDE "Lens" (https://k8slens.dev)
 
-## Usage of web-services:
+## Usage of web-services
 1. Import the ca certificate (`ca.crt`) in GoogleDrive `kube_access` into your browser's trust chain (or operating-system trust chain - depends on your used browser)
 2. Access webservice in browser at `https://lab04.ce.uni-linz.ac.at/`
