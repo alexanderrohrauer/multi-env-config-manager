@@ -36,6 +36,7 @@ k3s_cluster:
     api_endpoint: "xxx"
 
     # Optional vars
+    # --disable=servicelb
     extra_server_args: " --tls-san=xxx"
     extra_agent_args: "--node-ip={{hostvars[inventory_hostname].private_ip}} --node-external-ip={{hostvars[inventory_hostname].public_ip}} --flannel-iface={{hostvars[inventory_hostname].private_ip_iface}}"
     # cluster_context: k3s-ansible

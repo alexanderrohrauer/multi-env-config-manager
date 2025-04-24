@@ -392,7 +392,9 @@ logs:
       headers:
         # -- Set default mode for fields.headers
         defaultmode: drop  # @schema enum:[keep, drop, redact]; default: drop
-        names: {}
+        names:
+          "User-Agent": keep
+          "X-Custom": keep
 
 metrics:
   # -- Enable metrics for internal resources. Default: false
@@ -786,8 +788,8 @@ service:
   # - 172.16.0.0/16
   ## -- Class of the load balancer implementation
   # loadBalancerClass: service.k8s.aws/nlb
-  externalIPs:
-    - "140.78.73.104"
+  externalIPs: []
+#    - "140.78.73.104"
   # - 1.2.3.4
   ## One of SingleStack, PreferDualStack, or RequireDualStack.
   # ipFamilyPolicy: SingleStack
@@ -886,8 +888,8 @@ affinity: {}
 #        topologyKey: kubernetes.io/hostname
 
 # -- nodeSelector is the simplest recommended form of node selection constraint.
-nodeSelector:
-  traefik: "true"
+nodeSelector: {}
+#  traefik: "true"
 # -- Tolerations allow the scheduler to schedule pods with matching taints.
 tolerations: []
 # -- You can use topology spread constraints to control
