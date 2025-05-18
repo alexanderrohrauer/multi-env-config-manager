@@ -16,6 +16,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-kubernetes-service-binding'
     implementation 'io.quarkus:quarkus-kubernetes-config'
     implementation 'io.quarkus:quarkus-kubernetes'
+    implementation 'io.quarkus:quarkus-container-image-docker'
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
 }

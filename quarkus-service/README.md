@@ -66,6 +66,23 @@ kubernetes-service-binding
 ## Adding Extensions
 Zum file build.gradle wechseln und unter dependencies steht add extensions
 
+## Quarkus in Kubernets
+## Docker Image der Quarkus-Anwendung:
+./gradlew build
+docker build -f src/main/docker/Dockerfile.jvm -t dein-benutzername/quarkus-service:1.0 .
+docker push dein-benutzername/quarkus-service:1.0
+
+## Zentrale Konfigurationsdatei
+Die Datei build/kubernetes/kubernetes.yml wird beim Build von Quarkus automatisch erzeugt und
+ist die zentrale Konfigurationsdatei mit der die Quarkus-App in Kubernetes deployed werden kann.
+Kubernetes startet somit auch Pods auf Basis dieser Datei
+
+## Deployment in Kubernetes anwenden
+kubectl apply -f build/kubernetes/kubernetes.yml -n namespace
+
+## Pod überprüfen
+kubectl get pods -n namespace
+
 Easily start your REST Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
