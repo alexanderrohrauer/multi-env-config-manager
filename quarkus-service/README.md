@@ -83,6 +83,21 @@ kubectl apply -f build/kubernetes/kubernetes.yml -n namespace
 ## Pod überprüfen
 kubectl get pods -n namespace
 
+## Konfiguration des Kubernetes Client
+Konfiguration in src/main/application.properties:
+# Vertrauen gegenüber unsicheren Zertifikaten
+quarkus.kubernetes-client.trust-certs=true
+
+# Standard-Namespace für den Client
+quarkus.kubernetes-client.namespace=default
+
+# Timeout für Verbindungen (optional)
+quarkus.kubernetes-client.request-timeout=5000
+
+# API-Server (optional, falls manuell gesetzt)
+quarkus.kubernetes-client.master-url=https://your-k8s-api-server
+
+
 Easily start your REST Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
