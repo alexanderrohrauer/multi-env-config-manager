@@ -29,7 +29,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Kubectl
-        run: echo ${{ secrets.KUBE_CONFIG }} > $HOME/.kube/config
+        run: | 
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v4
