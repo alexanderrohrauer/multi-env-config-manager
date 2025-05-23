@@ -52,4 +52,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build -dREGISTRY_USERNAME=${{ secrets.REGISTRY_USERNAME }} -dREGISTRY_PASSWORD=${{ secrets.REGISTRY_PASSWORD }}
+        run: ./gradlew build --no-daemon
+        env:
+          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
