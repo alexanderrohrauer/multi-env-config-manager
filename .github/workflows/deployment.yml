@@ -30,6 +30,7 @@ jobs:
 
       - name: Setup Kubectl
         run: | 
+          mkdir $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
 
