@@ -8,7 +8,7 @@ import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class ConfigMapWatcher implements Watcher<ConfigMap> {
-    private static final Logger LOGGER = Logger.getLogger(AppLifecycleBean.class);
+    private static final Logger LOGGER = Logger.getLogger(ConfigMapWatcher.class);
 
     @Override
     public void eventReceived(Action action, ConfigMap configMap) {
