@@ -17,6 +17,6 @@ public class AppLifecycleBean {
 
     void onStart(@Observes StartupEvent ev) {
         var configMaps = kubernetesClient.configMaps().inAnyNamespace().list().getItems();
-        LOGGER.debug(configMaps);
+        // Do something with configMaps...
     }
 }
