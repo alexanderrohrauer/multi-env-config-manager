@@ -4,6 +4,8 @@ kind: StorageClass
 metadata:
   name: smb-storage-class
   namespace: kube-system
+  annotations:
+    "storageclass.kubernetes.io/is-default-class": "true"
 provisioner: smb.csi.k8s.io
 parameters:
   source: "//140.78.73.104/SAMBASHARE"
