@@ -16,7 +16,21 @@ public class AppLifecycleBean {
     KubernetesClient kubernetesClient;
 
     void onStart(@Observes StartupEvent ev) {
-        var configMaps = kubernetesClient.configMaps().inAnyNamespace().list().getItems();
-        LOGGER.debug(configMaps);
+        try {
+            kubernetesClient.configMaps().inAnyNamespace().list().getItems();
+        } catch (Exception e) {
+            LOGGER.info("Cannot list ConfigMaps in any namespace");
+        }
+        try {
+            kubernetesClient.configMaps().inNamespace("kube-system").list().getItems();
+        } catch (Exception e) {
+            LOGGER.info("Cannot list ConfigMaps in kube-system");
+        }
+        try {
+            kubernetesClient.configMaps().inNamespace("test").list().getItems();
+            LOGGER.info("Can list ConfigMaps in test");
+        } catch (Exception e) {
+            LOGGER.info("Cannot list ConfigMaps in test");
+        }
     }
 }
