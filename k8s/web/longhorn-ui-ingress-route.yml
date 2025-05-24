@@ -1,0 +1,53 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: longhorn-authentication
+  namespace: web
+spec:
+  basicAuth:
+    secret: longhorn-users
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: longhorn-add-slash
+  namespace: web
+spec:
+  redirectRegex:
+    regex: ^(.*)/prod/longhorn$
+    replacement: ${1}/prod/longhorn/
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: longhorn-strip-prefix
+  namespace: web
+spec:
+  stripPrefix:
+    prefixes:
+      - /prod/longhorn
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: longhorn-ui-ingress-route
+  namespace: web
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: PathPrefix(`/prod/longhorn`)
+      kind: Rule
+      middlewares:
+        - name: redirect-to-https
+        - name: longhorn-authentication
+        - name: longhorn-add-slash
+        - name: longhorn-strip-prefix
+      services:
+        - name: longhorn-frontend
+          namespace: longhorn-system
+          port: 80
+  tls:
+    secretName: web-cert-secret
