@@ -9,10 +9,10 @@ data:
       - type: log
         paths:
           - /var/log/traefik/access.log
-        scan_frequency: 10s
         json.keys_under_root: true
         json.add_error_key: true
         json.ignore_decoding_error: true
+        scan_frequency: 5s
 
     output.elasticsearch:
       hosts: ["${ELASTIC_HOST}"]
@@ -20,3 +20,6 @@ data:
       password: "${ELASTIC_PASSWORD}"
       ssl:
         verification_mode: none
+    queue.mem:
+      events: 4096
+      flush.min_events: 512
