@@ -1,0 +1,10 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: kibana-servers-transport
+  namespace: production
+spec:
+  serverName: kibana.production.svc.cluster.local
+  rootCAsSecrets:
+    - root-secret
