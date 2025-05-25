@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-config
+  namespace: development
+data:
+  NODE_ENV: development
+  DATABASE_CLIENT: postgres
+  DATABASE_HOST: ""          # TODO:
+  DATABASE_PORT: ""          # TODO:
+  DATABASE_NAME: ""          # TODO:
+  DATABASE_USERNAME: ""      # TODO:
+  DATABASE_PASSWORD: ""      # TODO:
+  APP_KEYS: appkey1dev, appkey2dev, appkey3dev, appkey4dev, appkey5dev
+  API_TOKEN_SALT: tokensalt
+  ADMIN_JWT_SECRET: adminjwtsecret
+  JWT_SECRET: userjwtsecret
