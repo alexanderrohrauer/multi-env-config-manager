@@ -66,6 +66,9 @@ deployment:
           subPath: filebeat.yml
         - name: filebeat-data
           mountPath: /usr/share/filebeat/data
+        - name: ca-cert
+          mountPath: /usr/share/filebeat/certs
+          readOnly: true
       env:
         - name: ELASTIC_HOST
           value: "https://elastic-es-http.production.svc.cluster.local:9200/"
@@ -92,6 +95,9 @@ deployment:
         name: traefik-filebeat-config
     - name: filebeat-data
       emptyDir: {}
+    - name: ca-cert
+      secret:
+        secretName: root-secret
 
   # - name: dsdsocket
   #   hostPath:

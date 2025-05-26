@@ -21,7 +21,7 @@ data:
       password: "${ELASTIC_PASSWORD}"
       #index: "beats-access-log-%{[agent.version]}"
       ssl:
-        verification_mode: none
+        certificate_authorities: ["/usr/share/filebeat/certs/ca.crt"]
     queue.mem:
       events: 4096
       flush.min_events: 512

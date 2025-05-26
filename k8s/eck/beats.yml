@@ -22,7 +22,7 @@ spec:
       password: "${ELASTIC_PASSWORD}"
       index: "beats-k8s-%{[agent.version]}"
       ssl:
-        verification_mode: none
+        certificate_authorities: [ "/usr/share/filebeat/certs/ca.crt" ]
   daemonSet:
     podTemplate:
       spec:
@@ -39,6 +39,9 @@ spec:
                 mountPath: /var/log/pods
               - name: varlibdockercontainers
                 mountPath: /var/lib/docker/containers
+              - name: ca-cert
+                mountPath: /usr/share/filebeat/certs
+                readOnly: true
             env:
               - name: ELASTIC_HOST
                 value: "https://elastic-es-http.production.svc.cluster.local:9200/"
@@ -59,4 +62,6 @@ spec:
           - name: varlibdockercontainers
             hostPath:
               path: /var/lib/docker/containers
-          - name: elastic
+          - name: ca-cert
+            secret:
+              secretName: root-secret
