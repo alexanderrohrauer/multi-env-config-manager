@@ -15,6 +15,9 @@ spec:
     - elastic
     - elastic.production.svc
     - elastic.production.svc.cluster.local
+    - elastic-es-http
+    - elastic-es-http.production.svc
+    - elastic-es-http.production.svc.cluster.local
   subject:
     organizations:
       - elastic

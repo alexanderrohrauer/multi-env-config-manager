@@ -14,6 +14,15 @@ spec:
       - type: container
         paths:
           - /var/log/containers/*.log
+    setup.template.name: "beats-k8s"
+    setup.template.pattern: "beats-k8s-*"
+    output.elasticsearch:
+      host: "${ELASTIC_HOST}"
+      username: "${ELASTIC_USERNAME}"
+      password: "${ELASTIC_PASSWORD}"
+      index: "beats-k8s-%{[agent.version]}"
+      ssl:
+        verification_mode: none
   daemonSet:
     podTemplate:
       spec:
@@ -30,6 +39,16 @@ spec:
                 mountPath: /var/log/pods
               - name: varlibdockercontainers
                 mountPath: /var/lib/docker/containers
+            env:
+              - name: ELASTIC_HOST
+                value: "https://elastic-es-http.production.svc.cluster.local:9200/"
+              - name: ELASTIC_USERNAME
+                value: "elastic"
+              - name: ELASTIC_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: elastic-es-elastic-user
+                    key: elastic
         volumes:
           - name: varlogcontainers
             hostPath:
@@ -40,3 +59,4 @@ spec:
           - name: varlibdockercontainers
             hostPath:
               path: /var/lib/docker/containers
+          - name: elastic
