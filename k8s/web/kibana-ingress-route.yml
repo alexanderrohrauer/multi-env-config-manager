@@ -1,0 +1,23 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kibana-ingress-route
+  namespace: web
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: PathPrefix(`/prod/kibana`)
+      kind: Rule
+      middlewares:
+        - name: redirect-to-https
+      services:
+        - name: kibana-kb-http
+          namespace: production
+          port: 5601
+          scheme: https
+          serversTransport: kibana-servers-transport
+  tls:
+    secretName: web-cert-secret
+

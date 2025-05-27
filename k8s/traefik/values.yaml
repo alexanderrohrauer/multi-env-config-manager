@@ -55,7 +55,30 @@ deployment:
   # -- Additional Pod labels (e.g. for filtering Pod by custom labels)
   podLabels: {}
   # -- Additional containers (e.g. for metric offloading sidecars)
-  additionalContainers: []
+  additionalContainers:
+    - name: filebeat
+      image: docker.elastic.co/beats/filebeat:8.16.1
+      volumeMounts:
+        - name: traefik-logs
+          mountPath: /var/log/traefik
+        - name: filebeat-config
+          mountPath: /usr/share/filebeat/filebeat.yml
+          subPath: filebeat.yml
+        - name: filebeat-data
+          mountPath: /usr/share/filebeat/data
+        - name: ca-cert
+          mountPath: /usr/share/filebeat/certs
+          readOnly: true
+      env:
+        - name: ELASTIC_HOST
+          value: "https://elastic-es-http.production.svc.cluster.local:9200/"
+        - name: ELASTIC_USERNAME
+          value: "elastic"
+        - name: ELASTIC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: elastic-password
+              key: elastic-password.txt
   # https://docs.datadoghq.com/developers/dogstatsd/unix_socket/?tab=host
   # - name: socat-proxy
   #   image: alpine/socat:1.0.5
@@ -64,7 +87,18 @@ deployment:
   #     - name: dsdsocket
   #       mountPath: /socket
   # -- Additional volumes available for use with initContainers and additionalContainers
-  additionalVolumes: []
+  additionalVolumes:
+    - name: traefik-logs
+      emptyDir: {}
+    - name: filebeat-config
+      configMap:
+        name: traefik-filebeat-config
+    - name: filebeat-data
+      emptyDir: {}
+    - name: ca-cert
+      secret:
+        secretName: root-secret
+
   # - name: dsdsocket
   #   hostPath:
   #     path: /var/run/statsd-exporter
@@ -348,10 +382,9 @@ volumes: []
 #   type: configMap
 
 # -- Additional volumeMounts to add to the Traefik container
-additionalVolumeMounts: []
-# -- For instance when using a logshipper for access logs
-# - name: traefik-logs
-#   mountPath: /var/log/traefik
+additionalVolumeMounts:
+ - name: traefik-logs
+   mountPath: /var/log/traefik
 
 logs:
   general:
@@ -368,10 +401,10 @@ logs:
     # -- To enable access logs
     enabled: true
     # -- Set [access log format](https://doc.traefik.io/traefik/observability/access-logs/#format)
-    format: common # @schema enum:["common", "json", null]; type:[string, null]; default: "common"
-    # filePath: "/var/log/traefik/access.log
+    format: json # @schema enum:["common", "json", null]; type:[string, null]; default: "common"
+    filePath: "/var/log/traefik/access.log"
     # -- Set [bufferingSize](https://doc.traefik.io/traefik/observability/access-logs/#bufferingsize)
-    bufferingSize:  # @schema type:[integer, null]
+    bufferingSize: 100  # @schema type:[integer, null]
     # -- Set [filtering](https://docs.traefik.io/observability/access-logs/#filtering)
     filters:  # @schema additionalProperties: false
       # -- Set statusCodes, to limit the access logs to requests with a status codes in the specified range
