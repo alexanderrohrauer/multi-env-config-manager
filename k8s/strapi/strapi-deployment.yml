@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi
+  namespace: production
+  labels:
+    app: strapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      labels:
+        app: strapi
+    spec:
+      containers:
+        - name: strapi
+          image: vanevel/strapi-app:latest
+          ports:
+            - containerPort: 1337
+          env:
+            # ConfigMap references (non-sensitive)
+            - name: DATABASE_CLIENT
+              valueFrom:
+                configMapKeyRef:
+                  name: strapi-config
+                  key: DATABASE_CLIENT
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: strapi-config
+                  key: DATABASE_HOST
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: strapi-config
+                  key: DATABASE_PORT
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: strapi-config
+                  key: DATABASE_NAME
+
+            # Secrets (sensitive)
+            - name: DATABASE_USERNAME
+              value: "admin"
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: password
+            - name: APP_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: strapi-secret
+                  key: APP_KEYS
+            - name: API_TOKEN_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: strapi-secret
+                  key: API_TOKEN_SALT
+            - name: ADMIN_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: strapi-secret
+                  key: ADMIN_JWT_SECRET
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: strapi-secret
+                  key: JWT_SECRET
+            - name: DATABASE_SSL
+              value: 'false'
+
+
