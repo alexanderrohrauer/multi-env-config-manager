@@ -4,7 +4,8 @@ metadata:
   name: strapi-config
   namespace: production
 data:
+  NODE_ENV: production
   DATABASE_CLIENT: postgres
   DATABASE_HOST: postgresql
-  DATABASE_PORT: 5432
+  DATABASE_PORT: "5432"
   DATABASE_NAME: "mydb"
