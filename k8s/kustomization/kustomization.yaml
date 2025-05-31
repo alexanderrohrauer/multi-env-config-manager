@@ -7,6 +7,11 @@ secretGenerator:
     files:
       - .secret/htpasswd.users
     type: Opaque
+  - name: elastic-password
+    namespace: kube-system
+    files:
+      - .secret/elastic-password.txt
+    type: Opaque
 
 generatorOptions:
   disableNameSuffixHash: true
