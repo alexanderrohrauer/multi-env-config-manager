@@ -9,3 +9,4 @@ data:
   DATABASE_HOST: postgresql
   DATABASE_PORT: "5432"
   DATABASE_NAME: "mydb"
+  DATABASE_SSL: "false"
