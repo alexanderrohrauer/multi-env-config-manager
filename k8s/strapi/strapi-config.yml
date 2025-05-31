@@ -8,5 +8,5 @@ data:
   DATABASE_CLIENT: postgres
   DATABASE_HOST: postgresql
   DATABASE_PORT: "5432"
-  DATABASE_NAME: "mydb"
+  DATABASE_NAME: "strapi_prod_db"
   DATABASE_SSL: "false"
