@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql
+  namespace: production
   labels:
     app: postgresql
 spec:
@@ -22,15 +23,13 @@ spec:
           env:
             - name: POSTGRES_USER
               value: "admin"
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: postgresql-secret
-                  key: password
             - name: POSTGRES_DB
               value: "mydb"
             - name: PGDATA
               value: /var/lib/postgresql/data/db
+          envFrom:
+            - secretRef:
+                name: postgresql-secret
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
