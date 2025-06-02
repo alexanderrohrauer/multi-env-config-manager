@@ -5,21 +5,18 @@ metadata:
   namespace: kube-system
 data:
   filebeat.yml: |-
-    filebeat.inputs:
-      - type: log
-        paths:
-          - /var/log/traefik/access.log
-        json.keys_under_root: true
-        json.add_error_key: true
-        json.ignore_decoding_error: true
-        scan_frequency: 5s
-    #setup.template.name: "beats-access-log"
-    #setup.template.pattern: "beats-access-log-*"
+    filebeat.modules:
+      - module: traefik
+        access:
+          enabled: true
+          var.paths: ["/var/log/traefik/access.log*"]
+    setup.template.name: "logs-access-log-traefik"
+    setup.template.pattern: "logs-access-log-traefik-*"
     output.elasticsearch:
       hosts: ["${ELASTIC_HOST}"]
       username: "${ELASTIC_USERNAME}"
       password: "${ELASTIC_PASSWORD}"
-      #index: "beats-access-log-%{[agent.version]}"
+      index: "logs-access-log-traefik-%{[agent.version]}"
       ssl:
         certificate_authorities: ["/usr/share/filebeat/certs/ca.crt"]
     queue.mem:
