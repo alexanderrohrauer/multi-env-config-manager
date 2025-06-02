@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-config
+data:
+  postgresql.conf: |
+    ssl = on
+    ssl_cert_file = '/etc/postgres/tls/tls.crt'
+    ssl_key_file = '/etc/postgres/tls/tls.key'
+    hba_file = '/etc/pgconfig/pg_hba.conf'
+
+  pg_hba.conf: |
+    local all all md5
+    hostssl all all 10.43.0.0/16 md5
+    hostssl all all 127.0.0.1/32 md5
+    

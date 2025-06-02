@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql
-  namespace: production
   labels:
     app: postgresql
 spec:
@@ -27,15 +26,26 @@ spec:
               value: "mydb"
             - name: PGDATA
               value: /var/lib/postgresql/data/db
-          envFrom:
-            - secretRef:
-                name: postgresql-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: postgresql-secret.txt
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
             - name: tls
               mountPath: /etc/postgres/tls
               readOnly: true
+            - name: initdb
+              mountPath: /docker-entrypoint-initdb.d
+              readOnly: true
+            - name: config
+              mountPath: /etc/pgconfig
+              readOnly: true
+          args:
+            - "-c"
+            - "config_file=/etc/pgconfig/postgresql.conf"
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -43,3 +53,19 @@ spec:
         - name: tls
           secret:
             secretName: postgres-tls
+            defaultMode: 0600
+        - name: initdb
+          configMap:
+            name: postgresql-initdb
+            defaultMode: 0600
+        - name: config
+          configMap:
+            name: postgresql-config
+            defaultMode: 0600
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+        fsGroupChangePolicy: OnRootMismatch
+
+
