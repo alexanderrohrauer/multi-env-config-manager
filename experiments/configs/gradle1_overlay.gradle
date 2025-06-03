@@ -1,0 +1,6 @@
+repositories {
+    // mcfg.io append_next_line
+    customRegistry()
+}
+
+version '1.0-STAGING'

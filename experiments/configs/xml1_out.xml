@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <database>
+        <host>staging.localhost</host>
+        <port>3306</port>
+        <username>admin-staging</username>
+        <password>secret2</password>
+        <dbname>mydatabase-staging</dbname>
+    </database>
+
+    <logging>
+        <level>DEBUG</level>
+        <logfile>/var/log/app.log</logfile>
+    </logging>
+
+    <features>
+        <feature name="dark_mode" enabled="false"/>
+        <feature name="beta_access" enabled="false"/>
+    </features>
+</config>

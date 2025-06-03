@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <database>
+        <host>localhost</host>
+        <port>3306</port>
+        <username>admin</username>
+        <password>secret</password>
+        <dbname>mydatabase</dbname>
+    </database>
+
+    <logging>
+        <level>INFO</level>
+        <logfile>/var/log/app.log</logfile>
+    </logging>
+
+    <features>
+        <feature name="dark_mode" enabled="true"/>
+        <feature name="beta_access" enabled="false"/>
+    </features>
+</config>

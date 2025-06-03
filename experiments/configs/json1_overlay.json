@@ -1,0 +1,9 @@
+{
+  "server": {
+    "ssl": {
+//      mcfg.io patch_line
+      "enabled": false
+    }
+  },
+  "features": [ /* mcfg.io append_item */ "ai_features" ]
+}
