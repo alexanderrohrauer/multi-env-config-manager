@@ -17,6 +17,12 @@ secretGenerator:
     files:
       - .secret/strapi-secret.env
     type: Opaque
+  - name: strapi-secret
+    namespace: test
+    files:
+      - .secret/strapi-secret-test.env
+    type: Opaque
+
 
 generatorOptions:
   disableNameSuffixHash: true
