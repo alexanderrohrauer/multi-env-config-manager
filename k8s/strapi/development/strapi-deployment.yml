@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi
+  namespace: development
+  labels:
+    app: strapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      labels:
+        app: strapi
+    spec:
+      containers:
+        - name: strapi
+          image: vanevel/strapi-app:latest
+          ports:
+            - containerPort: 1337
+          envFrom:
+            - configMapRef:
+                name: strapi-config
+            - secretRef:
+                name: strapi-secret
+          volumeMounts:
+            - name: user-data
+              mountPath: /srv/app/public/uploads
+      volumes:
+        - name: user-data
+          persistentVolumeClaim:
+            claimName: strapi-dev-pvc

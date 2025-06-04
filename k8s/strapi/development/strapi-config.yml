@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-config
+  namespace: development
+data:
+  NODE_ENV: development
+  DATABASE_CLIENT: postgres
+  DATABASE_HOST: postgresql
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "strapi_dev_db"
+  DATABASE_SSL: "false"
