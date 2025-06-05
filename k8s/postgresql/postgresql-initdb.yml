@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgresql-initdb
+data:
+  init-db.sql: |
+    CREATE DATABASE strapi_db OWNER admin;
+    GRANT ALL PRIVILEGES ON strapi_db.* TO admin;
+
+    
