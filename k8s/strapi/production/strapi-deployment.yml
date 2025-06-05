@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: strapi
-  namespace: production
   labels:
     app: strapi
 spec:
@@ -25,6 +24,12 @@ spec:
                 name: strapi-config
             - secretRef:
                 name: strapi-secret
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgresql-secret.txt
+                  name: postgresql-secret
           volumeMounts:
             - name: user-data
               mountPath: /srv/app/public/uploads

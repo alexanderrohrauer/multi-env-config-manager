@@ -4,9 +4,10 @@ metadata:
   name: strapi-config
   namespace: test
 data:
-  NODE_ENV: test
-  DATABASE_CLIENT: postgres
-  DATABASE_HOST: postgresql
+  NODE_ENV: "test"
+  DATABASE_CLIENT: "postgres"
+  DATABASE_HOST: "postgresql.test.svc.cluster.local"
   DATABASE_PORT: "5432"
-  DATABASE_NAME: "strapi_test_db"
+  DATABASE_NAME: "strapi_db"
+  DATABASE_USER: "admin"
   DATABASE_SSL: "true"

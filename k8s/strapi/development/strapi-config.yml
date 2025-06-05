@@ -4,9 +4,10 @@ metadata:
   name: strapi-config
   namespace: development
 data:
-  NODE_ENV: development
-  DATABASE_CLIENT: postgres
-  DATABASE_HOST: postgresql
+  NODE_ENV: "development"
+  DATABASE_CLIENT: "postgres"
+  DATABASE_HOST: "postgresql.development.svc.cluster.local"
   DATABASE_PORT: "5432"
-  DATABASE_NAME: "strapi_dev_db"
+  DATABASE_NAME: "strapi_db"
+  DATABASE_USER: "admin"
   DATABASE_SSL: "false"
