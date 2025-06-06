@@ -14,13 +14,13 @@ secretGenerator:
     type: Opaque
   - name: strapi-secret
     namespace: production
-    files:
+    envs:
       - .secret/strapi-secret.env
     type: Opaque
   - name: strapi-secret
     namespace: test
-    files:
-      - .secret/strapi-secret-test.env
+    envs:
+      - .secret/strapi-secret.env
     type: Opaque
 
 
