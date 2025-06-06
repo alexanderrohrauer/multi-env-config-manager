@@ -1,0 +1,20 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: strapi-ingress-route
+  namespace: web
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: PathPrefix(`/prod/strapi`)
+      kind: Rule
+      middlewares:
+        - name: redirect-to-https
+        - name: strapi-prefix-strip
+      services:
+        - name: strapi-service
+          namespace: production
+          port: 80
+  tls:
+    secretName: web-cert-secret

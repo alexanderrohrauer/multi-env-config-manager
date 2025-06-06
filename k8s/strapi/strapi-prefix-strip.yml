@@ -1,0 +1,11 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strapi-prefix-strip
+  namespace: web
+spec:
+  stripPrefix:
+    prefixes:
+      - /dev/strapi
+      - /test/strapi
+      - /prod/strapi

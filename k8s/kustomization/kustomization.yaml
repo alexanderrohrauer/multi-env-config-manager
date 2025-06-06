@@ -12,6 +12,12 @@ secretGenerator:
     files:
       - .secret/elastic-password.txt
     type: Opaque
+  - name: strapi-secret
+    namespace: production
+    envs:
+      - .secret/strapi-secret.env
+    type: Opaque
+
 
 generatorOptions:
   disableNameSuffixHash: true

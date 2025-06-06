@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-config
+  namespace: test
+data:
+  NODE_ENV: "test"
+  DATABASE_CLIENT: "postgres"
+  DATABASE_HOST: "postgresql.test.svc.cluster.local"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "strapi_db"
+  DATABASE_USER: "admin"
+  DATABASE_SSL: "true"
+  DATABASE_SSL_REJECT_UNAUTHORIZED: "false"
+  SERVER_URL: "https://lab04.ce.uni-linz.ac.at/test/strapi"
