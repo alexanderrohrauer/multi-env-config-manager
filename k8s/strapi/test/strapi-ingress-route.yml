@@ -11,6 +11,7 @@ spec:
       kind: Rule
       middlewares:
         - name: redirect-to-https
+        - name: strapi-prefix-strip
       services:
         - name: strapi-service
           namespace: production

@@ -9,5 +9,7 @@ data:
   DATABASE_HOST: "postgresql.production.svc.cluster.local"
   DATABASE_PORT: "5432"
   DATABASE_NAME: "strapi_db"
-  DATABASE_USER: "admin"
+  DATABASE_USERNAME: "admin"
   DATABASE_SSL: "true"
+  DATABASE_SSL_REJECT_UNAUTHORIZED: "false"
+  SERVER_URL: "https://lab04.ce.uni-linz.ac.at/prod/strapi"

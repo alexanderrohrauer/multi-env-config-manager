@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: strapi
-  namespace: production
+  namespace: test
   labels:
     app: strapi
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: strapi
-          image: ar010731/strapi-app:production
+          image: ar010731/strapi-app:test
           imagePullPolicy: Always
           ports:
             - containerPort: 1337

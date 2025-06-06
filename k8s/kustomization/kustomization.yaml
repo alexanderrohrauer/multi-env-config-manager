@@ -17,11 +17,6 @@ secretGenerator:
     envs:
       - .secret/strapi-secret.env
     type: Opaque
-  - name: strapi-secret
-    namespace: test
-    envs:
-      - .secret/strapi-secret.env
-    type: Opaque
 
 
 generatorOptions:

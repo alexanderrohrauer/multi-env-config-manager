@@ -1,4 +1,3 @@
 /.idea
 !/samba/inventory.yml
 k8s/kustomization/.secret
-k8s/strapi/development/strapi-secret.yml

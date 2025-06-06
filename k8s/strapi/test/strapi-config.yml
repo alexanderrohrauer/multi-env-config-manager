@@ -11,3 +11,5 @@ data:
   DATABASE_NAME: "strapi_db"
   DATABASE_USER: "admin"
   DATABASE_SSL: "true"
+  DATABASE_SSL_REJECT_UNAUTHORIZED: "false"
+  SERVER_URL: "https://lab04.ce.uni-linz.ac.at/test/strapi"

@@ -11,9 +11,10 @@ spec:
       kind: Rule
       middlewares:
         - name: redirect-to-https
+        - name: strapi-prefix-strip
       services:
         - name: strapi-service
-          namespace: dev
+          namespace: development
           port: 80
   tls:
     secretName: web-cert-secret
