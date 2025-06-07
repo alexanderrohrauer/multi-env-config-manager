@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-base
+  namespace: test
+data:
+  key1: "value1"
+  key2: "value2"
+
