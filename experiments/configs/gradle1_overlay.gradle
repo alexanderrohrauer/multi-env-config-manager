@@ -1,5 +1,4 @@
 repositories {
-    // mcfg.io append_next_line
     customRegistry()
 }
 

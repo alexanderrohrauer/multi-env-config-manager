@@ -5,7 +5,7 @@
     </logging>
 
     <features>
-<!--        mcfg.io patch_line-->
+<!--        mcfg.io patch_item-->
         <feature name="dark_mode" enabled="false" />
     </features>
 </config>

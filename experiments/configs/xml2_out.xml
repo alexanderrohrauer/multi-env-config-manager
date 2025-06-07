@@ -14,7 +14,7 @@
     </logging>
 
     <features>
-        <feature name="dark_mode" enabled="false" />
+        <feature name="dark_mode" enabled="false"/>
         <feature name="beta_access" enabled="false"/>
     </features>
 </config>

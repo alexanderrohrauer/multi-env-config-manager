@@ -23,7 +23,7 @@ dependencies {
 }
 
 group 'org.example'
-version '1.0-STAGING'
+version '1.0-SNAPSHOT'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
