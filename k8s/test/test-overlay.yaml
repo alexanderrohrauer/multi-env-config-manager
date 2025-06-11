@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-overlay
+  namespace: test
+  annotations:
+    "mcfg.io/base": "default/test-base"
+    "mcfg.io/file-mode": "true"
+    "example.org/test": "true"
+data:
+  key1: "value1"
+  key2: "value2"
+
