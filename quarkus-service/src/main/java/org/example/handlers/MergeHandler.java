@@ -1,6 +1,5 @@
 package org.example.handlers;
 
-import com.openai.client.OpenAIClient;
 import io.fabric8.kubernetes.api.builder.Builder;
 import io.fabric8.kubernetes.api.builder.Editable;
 import io.fabric8.kubernetes.api.model.HasMetadata;
