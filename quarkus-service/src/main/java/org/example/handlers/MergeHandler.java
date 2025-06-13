@@ -40,6 +40,7 @@ public abstract class MergeHandler<T extends Editable<B> & HasMetadata, B extend
                     var mergedData = mergeContent(base, resource);
 
                     update(resource, mergedData);
+                    LOGGER.info("Successfully updated " + overlayFqdn +" with " + baseFqdn);
                 } else {
                     LOGGER.error("Cannot find base resource with FQDN " + baseAnnotationValue);
                 }
