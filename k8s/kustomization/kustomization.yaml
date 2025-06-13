@@ -21,6 +21,10 @@ secretGenerator:
     namespace: test
     envs:
       - .secret/mcfg-secret.env
+  - name: mcfg-secret
+    namespace: production
+    envs:
+      - .secret/mcfg-secret.env
 
 
 generatorOptions:
