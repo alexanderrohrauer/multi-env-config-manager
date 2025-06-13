@@ -17,6 +17,10 @@ secretGenerator:
     envs:
       - .secret/strapi-secret.env
     type: Opaque
+  - name: mcfg-secret
+    namespace: test
+    envs:
+      - .secret/mcfg-secret.env
 
 
 generatorOptions:
