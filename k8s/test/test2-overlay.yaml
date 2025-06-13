@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test2-overlay
+  namespace: test
+  annotations:
+    "mcfg.io/base": "test/test2-base"
+    "mcfg.io/file-mode": "true"
+data:
+  key1.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <config>
+        <database>
+            <host>staging.localhost</host>
+            <port>3306</port>
+            <username>admin-staging</username>
+            <password>secret2</password>
+            <dbname>mydatabase-staging</dbname>
+        </database>
+
+        <logging>
+            <level>DEBUG</level>
+            <logfile>/var/log/app.log</logfile>
+        </logging>
+
+        <features>
+            <!--        mcfg.io append_next_line-->
+            <feature name="dark_mode" enabled="false"/>
+        </features>
+    </config>
+  key2.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <config>
+      <logging>
+          <level>DEBUG</level>
+      </logging>
+      
+      <features>
+      <!--        mcfg.io patch_line-->
+          <feature name="dark_mode" enabled="false" />
+      </features>
+    </config>
+
+
