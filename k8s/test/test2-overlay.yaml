@@ -24,7 +24,6 @@ data:
         </logging>
 
         <features>
-            <!--        mcfg.io append_next_line-->
             <feature name="dark_mode" enabled="false"/>
         </features>
     </config>
@@ -36,7 +35,6 @@ data:
       </logging>
       
       <features>
-      <!--        mcfg.io patch_line-->
           <feature name="dark_mode" enabled="false" />
       </features>
     </config>
