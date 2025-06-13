@@ -35,7 +35,7 @@ public abstract class MergeHandler<T extends Editable<B> & HasMetadata, B extend
 
                 if (base != null) {
                     var baseFqdn = base.getMetadata().getNamespace() + "/" + base.getMetadata().getName();
-                    LOGGER.info("Merging " + baseFqdn + " with " + overlayFqdn);
+                    LOGGER.info("Updating " + overlayFqdn + " with " + baseFqdn + "...");
 
                     var mergedData = mergeContent(base, resource);
 
