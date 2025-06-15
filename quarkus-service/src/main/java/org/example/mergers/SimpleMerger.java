@@ -15,7 +15,7 @@ public class SimpleMerger extends Merger {
         // uses everything from the base
         Map<String, String> result = new HashMap<>(base);
         // overwrite base values with overlay values if keys match.
-        // (It can also add key with its values which doesn't exist in the base!)
+        // (It can also add keys with its values that are not in the base!)
         result.putAll(overlay);
         return result;
     }
