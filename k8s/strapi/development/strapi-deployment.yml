@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi
+  namespace: development
+  labels:
+    app: strapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      labels:
+        app: strapi
+    spec:
+      containers:
+        - name: strapi
+          image: ar010731/strapi-app:development
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 1337
+          envFrom:
+            - configMapRef:
+                name: strapi-config
+            - secretRef:
+                name: strapi-secret
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgresql-secret.txt
+                  name: postgresql-secret
+          volumeMounts:
+            - name: user-data
+              mountPath: /srv/app/public/uploads
+      volumes:
+          - name: user-data
+            persistentVolumeClaim:
+              claimName: strapi-pvc
+      restartPolicy: Always
+

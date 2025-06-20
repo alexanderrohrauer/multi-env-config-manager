@@ -1,0 +1,17 @@
+node_modules
+dist
+.cache
+tmp
+.vscode
+.idea
+*.tsbuildinfo
+.git
+.gitignore
+.env
+.env.*
+*.log
+yarn-error.log
+npm-debug.log
+Dockerfile
+README.md
+*.md

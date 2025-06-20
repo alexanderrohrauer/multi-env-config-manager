@@ -2,16 +2,23 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 secretGenerator:
-  - name: longhorn-users
-    namespace: web
+  - name: postgresql-secret
+    namespace: production
     files:
-      - .secret/htpasswd.users
+      - postgresql-secret.txt
     type: Opaque
   - name: elastic-password
     namespace: kube-system
     files:
       - .secret/elastic-password.txt
     type: Opaque
+  - name: strapi-secret
+    namespace: production
+    envs:
+      - .secret/strapi-secret.env
+    type: Opaque
+
 
 generatorOptions:
   disableNameSuffixHash: true
+
