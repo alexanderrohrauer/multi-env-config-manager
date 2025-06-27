@@ -5,7 +5,7 @@ metadata:
   namespace: test
   annotations:
     "mcfg.io/base": "default/test-base"
-    "mcfg.io/file-mode": "true"
+    "mcfg.io/file-mode": "false"
     "example.org/test": "true"
 data:
   key1: "value1"

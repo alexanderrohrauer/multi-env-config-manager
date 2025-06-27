@@ -17,6 +17,7 @@ dependencies {
     implementation 'io.quarkus:quarkus-kubernetes'
     implementation 'io.quarkus:quarkus-container-image-jib'
     testImplementation 'io.quarkus:quarkus-junit5'
+    implementation "com.openai:openai-java:2.7.0"
 }
 
 group 'org.example'
