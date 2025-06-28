@@ -6,7 +6,9 @@ import io.fabric8.kubernetes.api.model.HasMetadata;
 import io.fabric8.kubernetes.client.Watcher;
 import io.fabric8.kubernetes.client.WatcherException;
 import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
 import org.example.mergers.Merger;
+import org.example.utils.AIMerger;
 import org.example.utils.AnnotationUtil;
 import org.jboss.logging.Logger;
 
@@ -17,6 +19,9 @@ import static org.example.utils.AnnotationUtil.hasAnnotation;
 
 public abstract class MergeHandler<T extends Editable<B> & HasMetadata, B extends Builder<T>> implements Watcher<T> {
     private static final Logger LOGGER = Logger.getLogger(MergeHandler.class);
+
+    @Inject
+    AIMerger aiMerger;
 
     public void handle(T resource) {
         if (hasAnnotation(resource, AnnotationUtil.BASE)) {
@@ -29,11 +34,12 @@ public abstract class MergeHandler<T extends Editable<B> & HasMetadata, B extend
 
                 if (base != null) {
                     var baseFqdn = base.getMetadata().getNamespace() + "/" + base.getMetadata().getName();
-                    LOGGER.info("Merging " + baseFqdn + " with " + overlayFqdn);
+                    LOGGER.info("Updating " + overlayFqdn + " with " + baseFqdn + "...");
 
                     var mergedData = mergeContent(base, resource);
 
                     update(resource, mergedData);
+                    LOGGER.info("Successfully updated " + overlayFqdn +" with " + baseFqdn);
                 } else {
                     LOGGER.error("Cannot find base resource with FQDN " + baseAnnotationValue);
                 }
@@ -53,7 +59,7 @@ public abstract class MergeHandler<T extends Editable<B> & HasMetadata, B extend
         var baseData = extractData(base);
         var overlayData = extractData(overlay);
 
-        var merger = Merger.forResource(overlay);
+        var merger = Merger.forResource(overlay, aiMerger);
 
         return merger.merge(baseData, overlayData);
     }
