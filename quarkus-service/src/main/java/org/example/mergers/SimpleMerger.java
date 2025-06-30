@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SimpleMerger extends Merger {
-    protected SimpleMerger(HasMetadata resource) {
+    public SimpleMerger(HasMetadata resource) {
         super(resource);
     }
 

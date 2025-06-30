@@ -11,7 +11,7 @@ public class FileModeMerger extends Merger {
 
     private final AIMerger aiMerger;
 
-    protected FileModeMerger(HasMetadata resource, AIMerger aiMerger) {
+    public FileModeMerger(HasMetadata resource, AIMerger aiMerger) {
         super(resource);
         this.aiMerger = aiMerger;
     }
