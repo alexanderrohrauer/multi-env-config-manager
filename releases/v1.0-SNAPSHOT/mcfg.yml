@@ -1,0 +1,104 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    app.quarkus.io/quarkus-version: 3.22.3
+    app.quarkus.io/commit-id: c6aa71b2f60c5fcbdf0821a29f4eee5a704c1c46
+    app.quarkus.io/vcs-uri: https://github.com/alexanderrohrauer/multi-env-config-manager.git
+    app.quarkus.io/build-timestamp: 2025-07-01 - 06:49:12 +0000
+  labels:
+    app.kubernetes.io/name: quarkus-service
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.kubernetes.io/managed-by: quarkus
+  name: quarkus-service
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: multi-env-config-manager
+  labels:
+    app.kubernetes.io/managed-by: quarkus
+    app.kubernetes.io/name: multi-env-config-manager
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+  annotations:
+    app.quarkus.io/quarkus-version: 3.22.3
+    app.quarkus.io/commit-id: c6aa71b2f60c5fcbdf0821a29f4eee5a704c1c46
+    app.quarkus.io/vcs-uri: https://github.com/alexanderrohrauer/multi-env-config-manager.git
+    app.quarkus.io/build-timestamp: 2025-07-01 - 06:49:12 +0000
+rules:
+  - verbs:
+      - create
+      - update
+      - get
+      - list
+      - watch
+      - delete
+      - patch
+    apiGroups:
+      - ''
+    resources:
+      - configmaps
+      - secrets
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: quarkus-service
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+  name: quarkus-service-view
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: quarkus-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.quarkus.io/quarkus-version: 3.22.3
+    app.quarkus.io/commit-id: c6aa71b2f60c5fcbdf0821a29f4eee5a704c1c46
+    app.quarkus.io/vcs-uri: https://github.com/alexanderrohrauer/multi-env-config-manager.git
+    app.quarkus.io/build-timestamp: 2025-07-01 - 06:49:12 +0000
+  labels:
+    app.kubernetes.io/name: quarkus-service
+    app.kubernetes.io/version: 1.0-SNAPSHOT
+    app.kubernetes.io/managed-by: quarkus
+  name: quarkus-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/version: 1.0-SNAPSHOT
+      app.kubernetes.io/name: quarkus-service
+  template:
+    metadata:
+      annotations:
+        app.quarkus.io/quarkus-version: 3.22.3
+        app.quarkus.io/commit-id: c6aa71b2f60c5fcbdf0821a29f4eee5a704c1c46
+        app.quarkus.io/vcs-uri: https://github.com/alexanderrohrauer/multi-env-config-manager.git
+        app.quarkus.io/build-timestamp: 2025-07-01 - 06:49:12 +0000
+      labels:
+        app.kubernetes.io/managed-by: quarkus
+        app.kubernetes.io/version: 1.0-SNAPSHOT
+        app.kubernetes.io/name: quarkus-service
+    spec:
+      containers:
+        - env:
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: AI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: AI_API_KEY
+                  name: mcfg-secret
+          image: docker.io/alexanderrohrauer/quarkus-service:1.0-SNAPSHOT
+          imagePullPolicy: Always
+          name: quarkus-service
+      serviceAccountName: quarkus-service
