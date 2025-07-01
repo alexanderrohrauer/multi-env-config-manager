@@ -11,7 +11,7 @@ import static org.example.utils.AnnotationUtil.getAnnotationValue;
 public abstract class Merger {
     protected final HasMetadata resource;
 
-    protected Merger(HasMetadata resource) {
+    public Merger(HasMetadata resource) {
         this.resource = resource;
     }
 

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test3-overlay
+  namespace: test
+  annotations:
+    "mcfg.io/base": "test/test3-base"
+    "mcfg.io/file-mode": "true"
+data:
+  logging.xml: |
+    <config>
+        <logging>
+            <level>DEBUG</level>
+        </logging>
+    </config>
+
+  

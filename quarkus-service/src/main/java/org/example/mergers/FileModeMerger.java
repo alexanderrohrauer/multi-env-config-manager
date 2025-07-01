@@ -11,7 +11,7 @@ public class FileModeMerger extends Merger {
 
     private final AIMerger aiMerger;
 
-    protected FileModeMerger(HasMetadata resource, AIMerger aiMerger) {
+    public FileModeMerger(HasMetadata resource, AIMerger aiMerger) {
         super(resource);
         this.aiMerger = aiMerger;
     }
@@ -26,6 +26,7 @@ public class FileModeMerger extends Merger {
                     var baseContent = base.get(entry.getKey());
                     var overlayContent = entry.getValue();
                     var merged = aiMerger.merge(baseContent, overlayContent, ext);
+                    LOGGER.infof("Merged content for key %s:\n%s", entry.getKey(), merged);
                     base.put(entry.getKey(), merged);
                 } else {
                     LOGGER.info("Key "+entry.getKey()+" ignored in overlay map since it does not have the form <name>.<ext>");

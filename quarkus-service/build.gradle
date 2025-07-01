@@ -16,7 +16,10 @@ dependencies {
     implementation 'io.quarkus:quarkus-kubernetes-config'
     implementation 'io.quarkus:quarkus-kubernetes'
     implementation 'io.quarkus:quarkus-container-image-jib'
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
     testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     implementation "com.openai:openai-java:2.7.0"
 }
 
