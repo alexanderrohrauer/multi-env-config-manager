@@ -20,7 +20,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: quarkus-service
+        working-directory: mcfg
 
     steps:
       - name: Checkout source

@@ -1,4 +1,4 @@
-# quarkus-service
+# mcfg
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -49,7 +49,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./gradlew build -Dquarkus.native.enabled=true -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./build/quarkus-service-1.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./build/mcfg-1.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
 
@@ -69,8 +69,8 @@ Zum file build.gradle wechseln und unter dependencies steht add extensions
 ## Quarkus in Kubernets
 ## Docker Image der Quarkus-Anwendung:
 ./gradlew build
-docker build -f src/main/docker/Dockerfile.jvm -t dein-benutzername/quarkus-service:1.0 .
-docker push dein-benutzername/quarkus-service:1.0
+docker build -f src/main/docker/Dockerfile.jvm -t dein-benutzername/mcfg:1.0 .
+docker push dein-benutzername/mcfg:1.0
 
 ## Zentrale Konfigurationsdatei
 Die Datei build/kubernetes/kubernetes.yml wird beim Build von Quarkus automatisch erzeugt und
