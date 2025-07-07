@@ -97,6 +97,10 @@ spec:
                 secretKeyRef:
                   key: AI_API_KEY
                   name: mcfg-secret
+          envFrom:
+            - configMapRef:
+                name: mcfg-config
+                optional: true
           image: docker.io/ar010731/multi-env-config-manager:1.0-SNAPSHOT
           imagePullPolicy: Always
           name: multi-env-config-manager
