@@ -8,9 +8,9 @@ metadata:
     app.quarkus.io/vcs-uri: https://github.com/alexanderrohrauer/multi-env-config-manager.git
     app.quarkus.io/build-timestamp: 2025-07-01 - 06:49:12 +0000
   labels:
-    app.kubernetes.io/name: mcfg
+    app.kubernetes.io/name: multi-env-config-manager
     app.kubernetes.io/version: 1.0-SNAPSHOT
-  name: mcfg
+  name: multi-env-config-manager
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -43,16 +43,16 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   labels:
-    app.kubernetes.io/name: mcfg
+    app.kubernetes.io/name: multi-env-config-manager
     app.kubernetes.io/version: 1.0-SNAPSHOT
-  name: mcfg-view
+  name: multi-env-config-manager-view
 roleRef:
   kind: ClusterRole
   apiGroup: rbac.authorization.k8s.io
   name: view
 subjects:
   - kind: ServiceAccount
-    name: mcfg
+    name: multi-env-config-manager
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -63,15 +63,15 @@ metadata:
     app.quarkus.io/vcs-uri: https://github.com/alexanderrohrauer/multi-env-config-manager.git
     app.quarkus.io/build-timestamp: 2025-07-01 - 06:49:12 +0000
   labels:
-    app.kubernetes.io/name: mcfg
+    app.kubernetes.io/name: multi-env-config-manager
     app.kubernetes.io/version: 1.0-SNAPSHOT
-  name: mcfg
+  name: multi-env-config-manager
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/version: 1.0-SNAPSHOT
-      app.kubernetes.io/name: mcfg
+      app.kubernetes.io/name: multi-env-config-manager
   template:
     metadata:
       annotations:
@@ -81,7 +81,7 @@ spec:
         app.quarkus.io/build-timestamp: 2025-07-01 - 06:49:12 +0000
       labels:
         app.kubernetes.io/version: 1.0-SNAPSHOT
-        app.kubernetes.io/name: mcfg
+        app.kubernetes.io/name: multi-env-config-manager
     spec:
       containers:
         - env:
@@ -96,5 +96,5 @@ spec:
                   name: mcfg-secret
           image: docker.io/ar010731/multi-env-config-manager:1.0-SNAPSHOT
           imagePullPolicy: Always
-          name: mcfg
-      serviceAccountName: mcfg
+          name: multi-env-config-manager
+      serviceAccountName: multi-env-config-manager
