@@ -1,11 +1,16 @@
 # Multi env config manager
 
-## Installation of kubectl
-1. Install `kubectl` CLI client for Kubernetes (https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/)
-2. After installed replace the kube-config-file somewhere in your PC's home-folder (mostly located under `$HOME/.kube`) with the file `config` from the GoogleDrive folder `kube_access` 
-3. Now you can access kubernetes cluster with the `kubectl` command
-4. Alternatively you can use a GUI: the Kubernetes plugin for Intellij or the IDE "Lens" (https://k8slens.dev)
+This tool can be used to merge multiple config maps when used in multiple environments.
 
-## Usage of web-services
-1. Import the ca certificate (`ca.crt`) in GoogleDrive `kube_access` into your browser's trust chain (or operating-system trust chain - depends on your used browser)
-2. Access webservice in browser at `https://lab04.ce.uni-linz.ac.at/`
+# Installation
+1. Create namespace `kubectl create namespace multi-env-config-manager`
+2. If using OpenAI, create the API-Key with the `Model capabilities` permission set
+3. Create the secret from the template: https://github.com/alexanderrohrauer/multi-env-config-manager/blob/main/releases/v1.0-SNAPSHOT/mcfg-secret.example.yaml
+4. Optional: Create configuration from the template: https://github.com/alexanderrohrauer/multi-env-config-manager/blob/main/releases/v1.0-SNAPSHOT/mcfg-config.example.yaml
+5. Deploy the tool: `kubectl apply -f https://raw.githubusercontent.com/alexanderrohrauer/multi-env-config-manager/refs/heads/main/releases/v1.0-SNAPSHOT/mcfg.yml`
+
+# Usage
+1. Create your Base-Config-Map and your Overlay-Config-Map in a Kubernetes YAML manifest (declarative)
+2. Add the annotation `"mcfg.io/base": "<base_config_namespace>/<base_config_name>"` to the overlay config
+3. If the keys in the config-maps are config-files, apply the Kubernetes annotation `"mcfg.io/file-mode": true`
+4. Deploy both Config-Maps. The Overlay-Config-Map should show have the merged content on the cluster.
