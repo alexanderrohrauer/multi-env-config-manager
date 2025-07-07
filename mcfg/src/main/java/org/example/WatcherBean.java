@@ -25,10 +25,10 @@ public class WatcherBean {
 
     void onStart(@Observes StartupEvent ev) {
         LOGGER.info("Watcher started");
-        kubernetesClient.configMaps().watch(configMapMergeHandler);
+        kubernetesClient.configMaps().inAnyNamespace().watch(configMapMergeHandler);
         LOGGER.info("Watching on ConfigMaps");
 
-        kubernetesClient.secrets().watch(secretMergeHandler);
+        kubernetesClient.secrets().inAnyNamespace().watch(secretMergeHandler);
         LOGGER.info("Watching on Secrets");
     }
 
