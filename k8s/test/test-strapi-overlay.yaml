@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-strapi-overlay
+  namespace: multi-env-config-manager
+  annotations:
+    "mcfg.io/base": "test/test-strapi-base"
+    "mcfg.io/file-mode": "false"
+data:
+  DATABASE_USER: "test-user"
+  DATABASE_SSL: "true"

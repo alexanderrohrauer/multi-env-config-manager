@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-json-config-overlay
+  namespace: multi-env-config-manager
+  annotations:
+    mcfg.io/base: "multi-env-config-manager/test-json-config-base"
+    mcfg.io/file-mode: "true"
+data:
+  config.json: |
+    {
+      "db_ssl": "true",
+      "db_user": "overlayUser"
+    }

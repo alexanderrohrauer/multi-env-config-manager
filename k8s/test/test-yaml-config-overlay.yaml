@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-yaml-config-overlay
+  namespace: multi-env-config-manager
+  annotations:
+    mcfg.io/base: "multi-env-config-manager/test-yaml-config-base"
+    mcfg.io/file-mode: "true"
+data:
+  config.yaml: |
+    db_ssl: true
+    db_user: overlayUser

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-yaml-config-base
+  namespace: multi-env-config-manager
+data:
+  config.yaml: |
+    db_host: localhost
+    db_port: 5432
+    db_ssl: false

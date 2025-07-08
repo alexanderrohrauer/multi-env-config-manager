@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-postgresql-base
+  namespace: multi-env-config-manager
+data:
+  postgresql.conf: |
+    listen_addresses = '*'
+    ssl = on
+    ssl_cert_file = '/etc/postgres/tls/tls.crt'
+    ssl_key_file = '/etc/postgres/tls/tls.key'
+    hba_file = '/etc/pgconfig/pg_hba.conf'
+  pg_hba.conf: |
+    local all all md5
+    hostssl all all 127.0.0.1/32 md5
